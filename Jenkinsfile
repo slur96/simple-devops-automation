@@ -18,24 +18,5 @@ pipeline {
                 }
             }
         }
-        stage('Push image to hub'){
-            steps{
-                script{
-                    withCredentials([string(credentialsId: 'dockerhubpwd', variable: 'dockerhubpwd')]) {
-                    sh 'docker login -u suresh394 -p ${dockerhubpwd}'
-                        
-                    }
-                    sh 'docker push suresh394/kubernetes'
-                }
-            }
-        }
-        stage('Deploy to K8s'){
-            steps{
-                script{
-                    kubernetesDeploy (configs: 'deploymentservice.yaml',kubeconfigId: 'kubeconfig')
-                }
-            }
-        }
-    
     }    
 }
